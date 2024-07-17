@@ -19,7 +19,7 @@ with tab1:
     Login = st.button("Login")
 
     if Login:
-        info = x.execute("SELECT * FROM user_list WHERE user_name = users AND passwords = user_password;")
+        info = x.execute("SELECT * FROM user_list WHERE user_name = %s AND passwords = %s", [users, user_password])
         st.write(info)
         
 
@@ -34,5 +34,7 @@ with tab2:
     select = st.button("Register now")
 
     if select:
-        x.execute("INSERT into user_list VALUES (user, passwords, Age, DOY, contact, mailid);")
+        a = x.execute("INSERT into user_list VALUES (%s, %s, %s, %s, %s, %s)",[User, passwords, Age, DOY, contact, mailid])
         Jk.commit()
+        if a:
+            st.success("Details added succesfully")
